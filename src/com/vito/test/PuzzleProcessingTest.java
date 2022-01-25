@@ -42,4 +42,14 @@ class PuzzleProcessingTest {
         );
         assertEquals(IMPOSSIBLE, sequence);
     }
+
+    @Test
+    void getSequenceCorrespondingContentTest() {
+        var expected = "ienjoycorresponding";
+        var sequence = PuzzleProcessing.getSequence(
+            new String[]{"i", "ing", "resp", "ond", "oyc", "hello", "enj", "or"},
+            new String[]{"ie", "ding", "orres", "pon", "y", "hi", "njo", "c"}
+        );
+        assertEquals(expected, sequence);
+    }
 }
