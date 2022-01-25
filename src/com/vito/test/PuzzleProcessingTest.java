@@ -1,9 +1,9 @@
 package com.vito.test;
 
-import com.vito.src.PuzzleProcessing;
+import com.vito.main.PuzzleProcessing;
 import org.junit.jupiter.api.Test;
 
-import static com.vito.src.PuzzleProcessing.IMPOSSIBLE;
+import static com.vito.main.PuzzleProcessing.IMPOSSIBLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PuzzleProcessingTest {

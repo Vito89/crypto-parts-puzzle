@@ -1,4 +1,4 @@
-package com.vito.src;
+package com.vito.main;
 
 import java.util.Scanner;
 
