@@ -76,8 +76,10 @@ public class PuzzleProcessing {
         int minLength = 101;
         int resIdx = -1;
         for (int idx : indexes) {
-            int length = wordsA[idx].length() + wordsB[idx].length();
-            if (minLength > length) {
+            var wrdA = wordsA[idx];
+            var wrdB = wordsB[idx];
+            int length = wrdA.length() + wrdB.length();
+            if (minLength > length && (wrdA.contains(wrdB) || wrdB.contains(wrdA))) {
                 minLength = length;
                 resIdx = idx;
             }
