@@ -1,0 +1,23 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+
+build
+*.iml
+.idea
+*.idea
+checkstyle.cache
+out
+!/out/*
+target
+!src/**/build
+/rest/rest-client.env.json
+.attach_pid*
+lombok.config
+.DS_Store
+*.hprof
+
+bagr-webapp/bagr-webapp-app/create.sql
+~$*.*
