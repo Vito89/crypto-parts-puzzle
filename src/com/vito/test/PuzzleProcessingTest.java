@@ -15,12 +15,31 @@ class PuzzleProcessingTest {
     }
 
     @Test
-    void getSequenceShortContentTest() {
+    void getSequenceAbcdContentTest() {
         var expected = "abcd";
         var sequence = PuzzleProcessing.getSequence(
             new String[]{"efgh", "d", "abc"},
             new String[]{"efgh", "cd", "ab"}
         );
-        assertEquals("abcd", sequence);
+        assertEquals(expected, sequence);
+    }
+
+    @Test
+    void getSequenceAlanContentTest() {
+        var expected = "dearalanhowareyou";
+        var sequence = PuzzleProcessing.getSequence(
+            new String[]{"are", "you", "how", "alan", "dear"},
+            new String[]{"yo", "u", "nhoware", "arala", "de"}
+        );
+        assertEquals(expected, sequence);
+    }
+
+    @Test
+    void shouldReturnImpossibleGetSequenceTest() {
+        var sequence = PuzzleProcessing.getSequence(
+            new String[]{"a", "b", "c"},
+            new String[]{"ab", "bb", "cc"}
+        );
+        assertEquals(IMPOSSIBLE, sequence);
     }
 }
