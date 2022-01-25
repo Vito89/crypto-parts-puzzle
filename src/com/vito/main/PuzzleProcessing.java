@@ -12,26 +12,37 @@ public class PuzzleProcessing {
 
         var fWordA = wordsA[firstIdx];
         var fWordB = wordsB[firstIdx];
+
         var fullPartInB = fWordA.length() < fWordB.length();
-//        var fullWord = fullPartInB ? fWordB : fWordA;
         var intersection = fullPartInB ? fWordB.substring(fWordA.length()) : fWordA.substring(fWordB.length()); // e
-        result.append(fullPartInB ? fWordB.substring(0, intersection.length()) : fWordA.substring(0, intersection.length())); // ie
+        var union = fullPartInB ? fWordB.substring(0, fWordB.length() - intersection.length()) :
+            fWordA.substring(0, fWordA.length() - intersection.length());
+        result.append(union);
         do {
-            final String[] currentColumn = fullPartInB ? wordsA : wordsB;
-            var indexes = findIndexByPrefix(intersection, currentColumn);
-            if (indexes.length == 0) return IMPOSSIBLE;
-            var curIdx = getShorterPairOfWords(indexes, wordsA, wordsB); // 4 (oyc y)
+            if (intersection.isEmpty()) return result.toString();
+            final String[] curWordsColumn = fullPartInB ? wordsA : wordsB;
+            var idxCandidates = findIndexByPrefix(intersection, curWordsColumn);
+            if (idxCandidates.length == 0) return IMPOSSIBLE;
 
-            String currentWord = fullPartInB ? wordsA[curIdx] : wordsB[curIdx]; // enj oyc
-            intersection = currentWord.substring(intersection.length()); // o yc
-            var union = findUnion(currentWord, !fullPartInB ? wordsA[curIdx] : wordsB[curIdx]);
-            result.append();
+            var curIdx = getShorterWordPairIdx(idxCandidates, wordsA, wordsB); // 4 (oyc y)
+            var curWord = curWordsColumn[curIdx]; // enj oyc
+            var currentPrefix = curWord.substring(intersection.length()); // nj      //o yc
+            var curOppositeWord = !fullPartInB ? wordsA[curIdx] : wordsB[curIdx]; // enj oyc
 
-            fullPartInB = !fullPartInB; // TODO depends on including (oyc y)
+            if (curOppositeWord.length() > currentPrefix.length()) {
+                fullPartInB = !fullPartInB; // opposite column contains next intersect
+                result.append(intersection);
+                result.append(currentPrefix);
+                intersection = curOppositeWord.substring(currentPrefix.length());
+            } else {
+                result.append(intersection);
+                result.append(curOppositeWord);
+                int interLength = intersection.length();
+                intersection = curWord.substring(interLength + curOppositeWord.length());
+            }
         } while (intersection.isEmpty());
 
-
-        return IMPOSSIBLE;
+        return "ERROR";
     }
 
     private static int determineFirstIndex(String[] wordsA, String[] wordsB) {
@@ -58,11 +69,7 @@ public class PuzzleProcessing {
         return result;
     }
 
-    private static int getShorterPairOfWords(int[] indexes, String[] wordsA, String[] wordsB) {
+    private static int getShorterWordPairIdx(int[] indexes, String[] wordsA, String[] wordsB) {
         return indexes[0]; // TODO
-    }
-
-    private static String findUnion(String currentWord, String s) {
-
     }
 }
