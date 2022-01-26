@@ -58,9 +58,7 @@ public class PuzzleProcessing {
     private static int determineFirstIndex(String[] wordsA, String[] wordsB) {
         for (int idx = 0; idx < wordsA.length; idx++) {
             if (wordsB[idx].startsWith(wordsA[idx]) || wordsA[idx].startsWith(wordsB[idx])) {
-                if (wordsA[idx].length() != wordsB[idx].length()) {
-                    return idx;
-                }
+                return idx;
             }
         }
         return -1;
