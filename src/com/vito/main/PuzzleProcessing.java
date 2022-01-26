@@ -12,13 +12,16 @@ public class PuzzleProcessing {
         var firstIdx = determineFirstIndex(wordsA, wordsB);
         if (firstIdx == -1) return IMPOSSIBLE;
 
-        var fWordA = wordsA[firstIdx];
-        var fWordB = wordsB[firstIdx];
+        var firstWordA = wordsA[firstIdx];
+        var firstWordB = wordsB[firstIdx];
 
-        var analyseInA = fWordA.length() < fWordB.length();
-        var intersection = analyseInA ? fWordB.substring(fWordA.length()) : fWordA.substring(fWordB.length()); // e
-        var union = analyseInA ? fWordB.substring(0, fWordB.length() - intersection.length()) :
-            fWordA.substring(0, fWordA.length() - intersection.length());
+        var analyseInA = firstWordA.length() < firstWordB.length();
+        var intersection = analyseInA ?
+            firstWordB.substring(firstWordA.length()) :
+            firstWordA.substring(firstWordB.length());
+        var union = analyseInA ?
+            firstWordB.substring(0, firstWordB.length() - intersection.length()) :
+            firstWordA.substring(0, firstWordA.length() - intersection.length());
         result.append(union);
 
         var alreadyProcessedRows = new boolean[wordsA.length];
@@ -31,11 +34,11 @@ public class PuzzleProcessing {
             if (idxCandidates == null) return IMPOSSIBLE;
 
             var curIdx = idxCandidates.length == 1 ? idxCandidates[0] :
-                getShorterWordPairIdx(idxCandidates, wordsA, wordsB); // 4 (oyc y)
+                getShorterWordPairIdx(idxCandidates, wordsA, wordsB);
             alreadyProcessedRows[curIdx] = true;
-            var curWord = curWordsColumn[curIdx]; // enj oyc
-            var currentPrefix = curWord.substring(intersection.length()); // nj      //o yc
-            var curOppositeWord = !analyseInA ? wordsA[curIdx] : wordsB[curIdx]; // enj oyc
+            var curWord = curWordsColumn[curIdx];
+            var currentPrefix = curWord.substring(intersection.length());
+            var curOppositeWord = !analyseInA ? wordsA[curIdx] : wordsB[curIdx];
 
             result.append(intersection);
             if (curOppositeWord.length() > currentPrefix.length()) {
