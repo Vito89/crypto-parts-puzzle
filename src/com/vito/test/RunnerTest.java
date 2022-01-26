@@ -1,6 +1,6 @@
 package com.vito.test;
 
-import com.vito.src.Runner;
+import com.vito.main.Runner;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
