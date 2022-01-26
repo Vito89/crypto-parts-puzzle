@@ -20,14 +20,19 @@ public class PuzzleProcessing {
         var union = analyseInA ? fWordB.substring(0, fWordB.length() - intersection.length()) :
             fWordA.substring(0, fWordA.length() - intersection.length());
         result.append(union);
+
+        var alreadyProcessedRows = new boolean[wordsA.length];
+        Arrays.fill(alreadyProcessedRows, false);
+        alreadyProcessedRows[firstIdx] = true;
         do {
             if (intersection.isEmpty()) return result.toString();
             final String[] curWordsColumn = analyseInA ? wordsA : wordsB;
-            var idxCandidates = findIndexByPrefix(intersection, curWordsColumn);
+            var idxCandidates = findIndexByPrefix(intersection, curWordsColumn, alreadyProcessedRows);
             if (idxCandidates == null) return IMPOSSIBLE;
 
             var curIdx = idxCandidates.length == 1 ? idxCandidates[0] :
                 getShorterWordPairIdx(idxCandidates, wordsA, wordsB); // 4 (oyc y)
+            alreadyProcessedRows[curIdx] = true;
             var curWord = curWordsColumn[curIdx]; // enj oyc
             var currentPrefix = curWord.substring(intersection.length()); // nj      //o yc
             var curOppositeWord = !analyseInA ? wordsA[curIdx] : wordsB[curIdx]; // enj oyc
@@ -58,12 +63,12 @@ public class PuzzleProcessing {
         return -1;
     }
 
-    // may be improved by set unavailable indexes that already used in the past (array of bool, size the same as words)
-    private static int[] findIndexByPrefix(String intersection, String[] words) {
+    private static int[] findIndexByPrefix(String intersection, String[] words, boolean[] alreadyProcessedRows) {
         int[] result = new int[words.length / 2]; // admit that no more than half part of words will be found
         Arrays.fill(result, -1);
         int resIdx = -1;
         for (int idx = 0; idx < words.length; idx++) {
+            if (alreadyProcessedRows[idx]) continue;
             if (words[idx].startsWith(intersection)) {
                 resIdx++;
                 result[resIdx] = idx;
