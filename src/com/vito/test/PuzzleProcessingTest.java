@@ -52,4 +52,14 @@ class PuzzleProcessingTest {
         );
         assertEquals(expected, sequence);
     }
+
+    @Test
+    void getSequenceEqualContentTest() {
+        var expected = "abc";
+        var sequence = PuzzleProcessing.getSequence(
+            new String[]{"abc"},
+            new String[]{"abc"}
+        );
+        assertEquals(expected, sequence);
+    }
 }
